@@ -7,6 +7,8 @@ class tic_tac_toe():
 
     def Draw(self):
         print('draw a board')
+        for i in range(2, -1, -1):
+            print(self.board[3*i], self.board[3*i+1], self.board[3*i+2])
 
     def SetPlayers(self):
         p1 = 'human'
@@ -32,4 +34,4 @@ class tic_tac_toe():
 
 p = tic_tac_toe()
 p.board = [True, None, None, None, True, None, None, None, True]
-print(p.IsGameOver())
+p.Draw()
