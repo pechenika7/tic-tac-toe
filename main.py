@@ -48,6 +48,7 @@ class ttt():
             elif self.players[0] == 'human':
                 i = int(input('Choose your move'))
                 self.board[i] = True
+        else:
             if self.players[1] == 'computer':
                 i = 0
                 while True:
@@ -69,16 +70,18 @@ class ttt():
             num = True
             while True:
                 res = ttt.IsGameOver(self)
+                print(res)
                 if res is None and mq == 9:
                     print('Draw!')
                     break
                 elif res is True:
                     print('First player won up!')
                     break
-                elif res is True:
+                elif res is False:
                     print('Second player won up!')
                     break
                 ttt.NextMove(self, num)
+                mq +=1
                 ttt.Draw(self)
                 num = not num
             is_end = int(input('Do u want to end? 0 - end'))
