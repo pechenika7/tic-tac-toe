@@ -4,7 +4,7 @@ class ttt():
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.players = ['computer', 'computer']
+        self.players = ['human', 'human']
 
     def Draw(self):
         print('draw a board')
@@ -18,6 +18,9 @@ class ttt():
         p1 = 'human'
         p2 = 'computer'
         print(p1, p2)
+
+    def IsValidMove(self, n):
+        return (n < 9) and (self.board[n] is None)
 
     def IsGameOver(self):
         for i in range(3):
@@ -46,7 +49,12 @@ class ttt():
                         break
                     i += 1
             elif self.players[0] == 'human':
-                i = int(input('Choose your move'))
+                while True:
+                    i = int(input('Choose your move'))
+                    if ttt.IsValidMove(self, i):
+                        break
+                    else:
+                        print('Incorrect move')
                 self.board[i] = True
         else:
             if self.players[1] == 'computer':
@@ -58,7 +66,12 @@ class ttt():
                         break
                     i += 1
             elif self.players[1] == 'human':
-                i = int(input('Choose your move'))
+                while True:
+                    i = int(input('Choose your move'))
+                    if ttt.IsValidMove(self, i):
+                        break
+                    else:
+                        print('Incorrect move')
                 self.board[i] = False
 
 
