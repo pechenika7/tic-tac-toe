@@ -1,14 +1,18 @@
-class tic_tac_toe():
+class ttt():
     num_players = 2
     size = 3
 
     def __init__(self):
-        self.board = list([None] * (tic_tac_toe.size**2))
+        self.board = list([None] * (ttt.size**2))
+        self.players = ['computer', 'computer']
 
     def Draw(self):
         print('draw a board')
         for i in range(2, -1, -1):
             print(self.board[3*i], self.board[3*i+1], self.board[3*i+2])
+
+    def ClearBoard(self):
+        self.board = list([None] * (ttt.size**2))
 
     def SetPlayers(self):
         p1 = 'human'
@@ -32,6 +36,54 @@ class tic_tac_toe():
             return s.pop()
         return None
 
-p = tic_tac_toe()
-p.board = [True, None, None, None, True, None, None, None, True]
-p.Draw()
+    def NextMove(self, num):
+        if num:
+            if self.players[0] == 'computer':
+                i = 0
+                while True:
+                    if self.board[i] is None:
+                        self.board[i] = True
+                        break
+                    i += 1
+            elif self.players[0] == 'human':
+                i = int(input('Choose your move'))
+                self.board[i] = True
+            if self.players[1] == 'computer':
+                i = 0
+                while True:
+                    print(i)
+                    if self.board[i] is None:
+                        self.board[i] = False
+                        break
+                    i += 1
+            elif self.players[1] == 'human':
+                i = int(input('Choose your move'))
+                self.board[i] = False
+
+
+    def Play(self):
+        while True:
+            ttt.ClearBoard(self)
+            ttt.Draw(self)
+            mq = 0 #количество ходов
+            num = True
+            while True:
+                res = ttt.IsGameOver(self)
+                if res is None and mq == 9:
+                    print('Draw!')
+                    break
+                elif res is True:
+                    print('First player won up!')
+                    break
+                elif res is True:
+                    print('Second player won up!')
+                    break
+                ttt.NextMove(self, num)
+                ttt.Draw(self)
+                num = not num
+            is_end = int(input('Do u want to end? 0 - end'))
+            if is_end == 0:
+                break
+
+p = ttt()
+p.Play()
