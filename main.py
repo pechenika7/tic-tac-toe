@@ -1,10 +1,14 @@
 class ttt():
     num_players = 2
-    size = 5
+    size = 3
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.players = ['human', 'computer']
+        self.players = ['computer', 'computer']
+
+    def Draw1(self):
+        for i in range(ttt.size - 1, -1, -1):
+            print(self.board[ttt.size * i:ttt.size * i + ttt.size: 1])
 
     def Draw(self):
         for i in range(ttt.size - 1, -1, -1):
@@ -70,7 +74,7 @@ class ttt():
     def Play(self):
         while True:
             ttt.ClearBoard(self)
-            ttt.Draw(self)
+            ttt.Draw1(self)
             mq = 0 #количество ходов
             num = 0
             while True:
@@ -87,7 +91,7 @@ class ttt():
                     break
                 ttt.NextMove(self, num%2)
                 mq +=1
-                ttt.Draw(self)
+                ttt.Draw1(self)
                 num +=1
             is_end = int(input('Do u want to end? 0 - end'))
             if is_end == 0:
