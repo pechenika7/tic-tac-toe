@@ -39,23 +39,23 @@ class ttt():
             return s.pop()
         return None
 
-    def NextMove(self, num):
+    def NextMove(self, item):
 
-        if self.players[num % 2] == 'computer':
+        if self.players[item] == 'computer':
             i = 0
             while True:
                 if self.board[i] is None:
-                    self.board[i] = bool(num % 2)
+                    self.board[i] = bool(item)
                     break
                 i += 1
-        elif self.players[num % 2] == 'human':
+        elif self.players[item] == 'human':
             while True:
                 i = int(input('Choose your move'))
                 if ttt.IsValidMove(self, i):
                     break
                 else:
                     print('Incorrect move')
-            self.board[i] = bool(num % 2)
+            self.board[i] = bool(item)
 
 
     def Play(self):
@@ -76,7 +76,7 @@ class ttt():
                 elif res is False:
                     print('Second player won up!')
                     break
-                ttt.NextMove(self, num)
+                ttt.NextMove(self, num%2)
                 mq +=1
                 ttt.Draw(self)
                 num +=1
