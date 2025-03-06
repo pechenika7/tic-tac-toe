@@ -41,28 +41,21 @@ class ttt():
 
     def NextMove(self, num):
 
-        def CalcIndex(flag):
-            if flag is True:
-                return 0
-            else:
-                return 1
-
-
-        if self.players[CalcIndex(num)] == 'computer':
+        if self.players[num % 2] == 'computer':
             i = 0
             while True:
                 if self.board[i] is None:
-                    self.board[i] = num
+                    self.board[i] = bool(num % 2)
                     break
                 i += 1
-        elif self.players[CalcIndex(num)] == 'human':
+        elif self.players[num % 2] == 'human':
             while True:
                 i = int(input('Choose your move'))
                 if ttt.IsValidMove(self, i):
                     break
                 else:
                     print('Incorrect move')
-            self.board[i] = num
+            self.board[i] = bool(num % 2)
 
 
     def Play(self):
@@ -70,7 +63,7 @@ class ttt():
             ttt.ClearBoard(self)
             ttt.Draw(self)
             mq = 0 #количество ходов
-            num = True
+            num = 0
             while True:
                 res = ttt.IsGameOver(self)
                 print(res)
@@ -86,7 +79,7 @@ class ttt():
                 ttt.NextMove(self, num)
                 mq +=1
                 ttt.Draw(self)
-                num = not num
+                num +=1
             is_end = int(input('Do u want to end? 0 - end'))
             if is_end == 0:
                 break
