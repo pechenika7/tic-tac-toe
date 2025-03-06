@@ -31,16 +31,15 @@ class ttt():
             if len(s) == 1:
                 return s.pop()
 
-        s = {self.board[0], self.board[4], self.board[8]}
+        s = {self.board[i] for i in range(0, ttt.size ** 2, ttt.size + 1)}
         if len(s) == 1:
             return s.pop()
-        s = {self.board[2], self.board[4], self.board[6]}
+        s = {self.board[i] for i in range(ttt.size - 1, (ttt.size * (ttt.size - 1) + 1), ttt.size - 1)}
         if len(s) == 1:
             return s.pop()
         return None
 
     def NextMove(self, item):
-
         if self.players[item] == 'computer':
             i = 0
             while True:
