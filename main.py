@@ -1,15 +1,17 @@
 class ttt():
     num_players = 2
-    size = 3
+    size = 5
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
         self.players = ['human', 'computer']
 
     def Draw(self):
-        print('draw a board')
-        for i in range(2, -1, -1):
-            print(self.board[3*i], self.board[3*i+1], self.board[3*i+2])
+        for i in range(ttt.size - 1, -1, -1):
+            b = list()
+            for j in range(ttt.size):
+                b.append(self.board[ttt.size * i + j])
+            print(b)
 
     def ClearBoard(self):
         self.board = list([None] * (ttt.size**2))
@@ -20,14 +22,21 @@ class ttt():
         print(p1, p2)
 
     def IsValidMove(self, n):
-        return (n < 9) and (self.board[n] is None)
+        return (n < ttt.size**2) and (self.board[n] is None)
 
     def IsGameOver(self):
-        for i in range(3):
-            s = {self.board[0+i*3], self.board[1+i*3], self.board[2+i*3]}
+
+        for i in range(ttt.size):
+            s = set()
+            for j in range(ttt.size):
+                s.add(self.board[i + j * ttt.size])
             if len(s) == 1:
                 return s.pop()
-            s = {self.board[0+i], self.board[3+i], self.board[6+i]}
+
+        for i in range(ttt.size):
+            s = set()
+            for j in range(ttt.size):
+                s.add(self.board[i * ttt.size +j])
             if len(s) == 1:
                 return s.pop()
 
@@ -37,6 +46,7 @@ class ttt():
         s = {self.board[i] for i in range(ttt.size - 1, (ttt.size * (ttt.size - 1) + 1), ttt.size - 1)}
         if len(s) == 1:
             return s.pop()
+
         return None
 
     def NextMove(self, item):
@@ -66,14 +76,14 @@ class ttt():
             while True:
                 res = ttt.IsGameOver(self)
                 print(res)
-                if res is None and mq == 9:
+                if res is None and mq == ttt.size**2:
                     print('Draw!')
                     break
                 elif res is True:
-                    print('First player won up!')
+                    print('Second player won up!')
                     break
                 elif res is False:
-                    print('Second player won up!')
+                    print('First player won up!')
                     break
                 ttt.NextMove(self, num%2)
                 mq +=1
