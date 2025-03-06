@@ -4,7 +4,7 @@ class ttt():
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.players = ['human', 'human']
+        self.players = ['human', 'computer']
 
     def Draw(self):
         print('draw a board')
@@ -40,39 +40,29 @@ class ttt():
         return None
 
     def NextMove(self, num):
-        if num:
-            if self.players[0] == 'computer':
-                i = 0
-                while True:
-                    if self.board[i] is None:
-                        self.board[i] = True
-                        break
-                    i += 1
-            elif self.players[0] == 'human':
-                while True:
-                    i = int(input('Choose your move'))
-                    if ttt.IsValidMove(self, i):
-                        break
-                    else:
-                        print('Incorrect move')
-                self.board[i] = True
-        else:
-            if self.players[1] == 'computer':
-                i = 0
-                while True:
-                    print(i)
-                    if self.board[i] is None:
-                        self.board[i] = False
-                        break
-                    i += 1
-            elif self.players[1] == 'human':
-                while True:
-                    i = int(input('Choose your move'))
-                    if ttt.IsValidMove(self, i):
-                        break
-                    else:
-                        print('Incorrect move')
-                self.board[i] = False
+
+        def CalcIndex(flag):
+            if flag is True:
+                return 0
+            else:
+                return 1
+
+
+        if self.players[CalcIndex(num)] == 'computer':
+            i = 0
+            while True:
+                if self.board[i] is None:
+                    self.board[i] = num
+                    break
+                i += 1
+        elif self.players[CalcIndex(num)] == 'human':
+            while True:
+                i = int(input('Choose your move'))
+                if ttt.IsValidMove(self, i):
+                    break
+                else:
+                    print('Incorrect move')
+            self.board[i] = num
 
 
     def Play(self):
