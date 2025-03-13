@@ -2,7 +2,7 @@ from random import choice
 
 class ttt():
     num_players = 2
-    size = 3
+    size = 5
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
@@ -59,26 +59,21 @@ class ttt():
 
     def NextMove(self, item):
         if self.players[item] == 'computer1':
-            i = 0
-            while True:
-                if self.board[i] is None:
-                    self.board[i] = bool(item)
-                    break
-                i += 1
+            indx = self.board.index(None)
         elif self.players[item] == 'computer2':
-            indx = list()
+            list_ = list()
             for i in range(len(self.board)):
                 if self.board[i] == None:
-                    indx.append(i)
-            self.board[choice(indx)] = bool(item)
-        elif self.players[item] == 'human':
+                    list_.append(i)
+            indx = choice(list_)
+        else: #for human
             while True:
-                i = int(input('Choose your move'))
-                if ttt.IsValidMove(self, i):
+                indx = int(input('Choose your move'))
+                if ttt.IsValidMove(self, indx):
                     break
                 else:
                     print('Incorrect move')
-            self.board[i] = bool(item)
+        self.board[indx] = bool(item)
 
 
     def Play(self):
