@@ -4,7 +4,7 @@ class ttt():
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.players = ['computer', 'computer']
+        self.players = ('computer', 'computer')
 
     def Draw1(self):
         for i in range(ttt.size - 1, -1, -1):
@@ -20,10 +20,12 @@ class ttt():
     def ClearBoard(self):
         self.board = list([None] * (ttt.size**2))
 
-    def SetPlayers(self):
-        p1 = 'human'
-        p2 = 'computer'
-        print(p1, p2)
+    @classmethod
+    def SetPlayers(cls):
+        p_dict = {'h': 'human', 'c': 'computer'}
+        p1 = p_dict.get(input('Who will be first player? h - human, c- computer'))
+        p2 = p_dict.get(input('Who will be second player? h - human, c- computer'))
+        return (p1, p2)
 
     def IsValidMove(self, n):
         return (n < ttt.size**2) and (self.board[n] is None)
@@ -77,6 +79,8 @@ class ttt():
             ttt.Draw1(self)
             mq = 0 #количество ходов
             num = 0
+            if input('Do you want to choose players? Now: ' + str(self.players) + 'y - yes ') == 'y':
+                self.players = ttt.SetPlayers()
             while True:
                 res = ttt.IsGameOver(self)
                 print(res)
