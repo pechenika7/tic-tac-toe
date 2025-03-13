@@ -1,10 +1,12 @@
+from random import choice
+
 class ttt():
     num_players = 2
     size = 3
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.players = ('computer', 'computer')
+        self.players = ('computer1', 'computer1')
 
     def Draw1(self):
         for i in range(ttt.size - 1, -1, -1):
@@ -22,9 +24,9 @@ class ttt():
 
     @classmethod
     def SetPlayers(cls):
-        p_dict = {'h': 'human', 'c': 'computer'}
-        p1 = p_dict.get(input('Who will be first player? h - human, c- computer'))
-        p2 = p_dict.get(input('Who will be second player? h - human, c- computer'))
+        p_dict = {'h': 'human', 'c1': 'computer1', 'c2': 'computer2'}
+        p1 = p_dict.get(input('Who will be first player? h - human, c1- computer1'))
+        p2 = p_dict.get(input('Who will be second player? h - human, c1- computer1'))
         return (p1, p2)
 
     def IsValidMove(self, n):
@@ -56,13 +58,19 @@ class ttt():
         return None
 
     def NextMove(self, item):
-        if self.players[item] == 'computer':
+        if self.players[item] == 'computer1':
             i = 0
             while True:
                 if self.board[i] is None:
                     self.board[i] = bool(item)
                     break
                 i += 1
+        elif self.players[item] == 'computer2':
+            indx = list()
+            for i in range(len(self.board)):
+                if self.board[i] == None:
+                    indx.append(i)
+            self.board[choice(indx)] = bool(item)
         elif self.players[item] == 'human':
             while True:
                 i = int(input('Choose your move'))
