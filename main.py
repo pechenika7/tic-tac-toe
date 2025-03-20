@@ -1,12 +1,12 @@
-from random import choice
+from players import player, computer1, computer2
 
 class ttt():
     num_players = 2
-    size = 5
+    size = 3
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.players = ('computer1', 'computer1')
+        self.gamers = [computer2('ibm', self.board), computer2('idl', self.board)]
 
     def Draw1(self):
         for i in range(ttt.size - 1, -1, -1):
@@ -28,9 +28,6 @@ class ttt():
         p1 = p_dict.get(input('Who will be first player? h - human, c1- computer1'))
         p2 = p_dict.get(input('Who will be second player? h - human, c1- computer1'))
         return (p1, p2)
-
-    def IsValidMove(self, n):
-        return (n < ttt.size**2) and (self.board[n] is None)
 
     def IsGameOver(self):
 
@@ -57,33 +54,17 @@ class ttt():
 
         return None
 
-    def NextMove(self, item):
-        if self.players[item] == 'computer1':
-            indx = self.board.index(None)
-        elif self.players[item] == 'computer2':
-            list_ = list()
-            for i in range(len(self.board)):
-                if self.board[i] == None:
-                    list_.append(i)
-            indx = choice(list_)
-        else: #for human
-            while True:
-                indx = int(input('Choose your move'))
-                if ttt.IsValidMove(self, indx):
-                    break
-                else:
-                    print('Incorrect move')
-        self.board[indx] = bool(item)
-
 
     def Play(self):
+        f = open('logs.ttt', 'w')
         while True:
             ttt.ClearBoard(self)
             ttt.Draw1(self)
             mq = 0 #количество ходов
             num = 0
-            if input('Do you want to choose players? Now: ' + str(self.players) + 'y - yes ') == 'y':
-                self.players = ttt.SetPlayers()
+           # if input('Do you want to choose players? Now: ' + str(self.gamers) + 'y - yes ') == 'y':
+           #     self.gamers = ttt.SetPlayers()
+           # f.write(str(self.gamers))
             while True:
                 res = ttt.IsGameOver(self)
                 print(res)
@@ -96,13 +77,16 @@ class ttt():
                 elif res is False:
                     print('First player won up!')
                     break
-                ttt.NextMove(self, num%2)
-                mq +=1
+                n = self.gamers[num % 2].NextMove()
+                self.board[n] = bool(num % 2)
+                mq += 1
                 ttt.Draw1(self)
-                num +=1
+                num += 1
+                self.gamers[num % 2].UpdateBoard(self.board)
             is_end = int(input('Do u want to end? 0 - end'))
             if is_end == 0:
                 break
+        f.close()
 
 p = ttt()
 p.Play()
