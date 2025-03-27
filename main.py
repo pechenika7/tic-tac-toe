@@ -1,4 +1,4 @@
-from players import player, computer1, computer2
+from players import player, computer1, computer2, human
 
 class ttt():
     num_players = 2
@@ -6,18 +6,11 @@ class ttt():
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.gamers = [computer2('ibm', self.board), computer2('idl', self.board)]
+        self.gamers = [computer2('ibm'), computer2('idl')]
 
     def Draw1(self):
         for i in range(ttt.size - 1, -1, -1):
             print(self.board[ttt.size * i:ttt.size * i + ttt.size: 1])
-
-    def Draw(self):
-        for i in range(ttt.size - 1, -1, -1):
-            b = list()
-            for j in range(ttt.size):
-                b.append(self.board[ttt.size * i + j])
-            print(b)
 
     def ClearBoard(self):
         self.board = list([None] * (ttt.size**2))
@@ -77,12 +70,11 @@ class ttt():
                 elif res is False:
                     print('First player won up!')
                     break
-                n = self.gamers[num % 2].NextMove()
+                n = self.gamers[num % 2].NextMove(self.board)
                 self.board[n] = bool(num % 2)
                 mq += 1
                 ttt.Draw1(self)
                 num += 1
-                self.gamers[num % 2].UpdateBoard(self.board)
             is_end = int(input('Do u want to end? 0 - end'))
             if is_end == 0:
                 break
