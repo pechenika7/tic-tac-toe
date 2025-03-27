@@ -6,7 +6,6 @@ class ttt():
 
     def __init__(self):
         self.board = list([None] * (ttt.size**2))
-        self.gamers = [computer2('ibm'), computer2('idl')]
 
     def Draw1(self):
         for i in range(ttt.size - 1, -1, -1):
@@ -15,12 +14,8 @@ class ttt():
     def ClearBoard(self):
         self.board = list([None] * (ttt.size**2))
 
-    @classmethod
-    def SetPlayers(cls):
-        p_dict = {'h': 'human', 'c1': 'computer1', 'c2': 'computer2'}
-        p1 = p_dict.get(input('Who will be first player? h - human, c1- computer1'))
-        p2 = p_dict.get(input('Who will be second player? h - human, c1- computer1'))
-        return (p1, p2)
+    def SetPlayers(self, pl1, pl2):
+        self.gamers = [pl1, pl2]
 
     def IsGameOver(self):
 
@@ -50,14 +45,16 @@ class ttt():
 
     def Play(self):
         f = open('logs.ttt', 'w')
+        pls = [computer1('abc'), computer2('def'), human('hjk')]
         while True:
             ttt.ClearBoard(self)
             ttt.Draw1(self)
             mq = 0 #количество ходов
             num = 0
-           # if input('Do you want to choose players? Now: ' + str(self.gamers) + 'y - yes ') == 'y':
-           #     self.gamers = ttt.SetPlayers()
-           # f.write(str(self.gamers))
+            i1 = int(input('Choose first players. 0 - computer1, 1 - computer2, 2 - human'))
+            i2 = int(input('Choose first players. 0 - computer1, 1 - computer2, 2 - human'))
+            self.SetPlayers(pls[i1], pls[i2])
+            f.write(str(self.gamers))
             while True:
                 res = ttt.IsGameOver(self)
                 print(res)
