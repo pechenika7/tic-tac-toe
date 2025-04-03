@@ -27,7 +27,7 @@ class computer2 (player):
     def NextMove(self, b):
         print('computer 2')
         list_ = list()
-        for i in range(len(b.board)):
+        for i in range(len(b)):
             if b.board[i] is None:
                 list_.append(i)
         return choice(list_)
@@ -39,7 +39,7 @@ class human(player):
         super().__init__(name)
 
     def IsValidMove(self, n, b):
-        return (n < len(b.board)**2) and (b.board[n] is None)
+        return (n < len(b)**2) and (b.board[n] is None)
 
     def NextMove(self, b):
         print('human')

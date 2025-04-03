@@ -13,6 +13,9 @@ class brd():
     def __index__(self):
         return self.board.index
 
+    def __len__(self):
+        return len(self.board)
+
     def Draw(self):
         for i in range(self.size - 1, -1, -1):
             print(self.board[self.size * i:self.size * i + self.size: 1])
